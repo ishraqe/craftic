@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
       
        $category=new \App\Category([
        	'type'=>1,
-       	'category_name'=>'handmade'
+       	'category_name'=>'electronics'
       
        	]);
 
@@ -28,7 +28,7 @@ class CategorySeeder extends Seeder
        $category->save();
        $category=new \App\Category([
        	'type'=>3,
-       	'category_name'=>'handmade'
+       	'category_name'=>'mobile'
       
        	]);
 

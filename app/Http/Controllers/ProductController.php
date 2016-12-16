@@ -34,6 +34,7 @@ class ProductController extends Controller
                 ->get();         
          $recomended = DB::table('products')
             ->join('ratings', 'products.id', '=', 'ratings.product_id')
+            ->join('images', 'products.id', '=', 'images.product_id')
             ->select('*')
             ->orderBy('ratings.rating','desc')
             ->take(3)
@@ -48,15 +49,35 @@ class ProductController extends Controller
     }
 
 
-    public function showdetails($id){
-    	$details=Product::findOrfail($id);
-    	return view('pages.product');
+    public function show($id){
+       
+       $product=Product::findOrfail($id);
+        $allProduct=Product::all()->take(5);
+       $recent=Product::orderBy('created_at','desc')->take(5)->get();
+       $related=Product::where('title', 'LIKE', $product->title)->get();
+    
+
+    return view('pages.single-product')->with([
+        'product' => $product,
+        'allProduct'=>$allProduct,
+        'recent' => $recent,
+        'related'=> $related
+    ]);
     }
-     public function showdetailsss($id){
-    	
-    	return view('pages.single');
-    }
+   
     public function shop(){
     	return view('pages.cart');
+    }
+
+    private function getProduct($id){
+
+         $product = DB::table('products')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('*')
+            ->where('products.id','=',4)
+            ->get();
+            
+
+            return $product;
     }
 }

@@ -5,13 +5,7 @@
 | Application Routes
 |--------------------------------------------------------------------------
 |
-  // public function brand(){
-    // 	return $this->belongsTo('App\Brand','brand_id');
-    // }
-    //  public function image()
-    // {
-    //     return $this->hasMany('App\Image');
-    // }
+  
 
 | Here is where you can register all of the routes for an application.
 | It's a breeze. Simply tell Laravel the URIs it should respond to
@@ -21,7 +15,13 @@
 
 
 
+// Route::get('/',function(){
+// 	return view('layouts.app');
+// });
 
+// Route::get('/master',function(){
+// 	return view('layouts.master');
+// });
 
 Route::get('/', [
 	'uses' => 'ProductController@getIndex',
@@ -30,7 +30,7 @@ Route::get('/', [
 ]);
 
 Route::get('/product/show/{id}', [
-	'uses' => 'ProductController@showdetails',
+	'uses' => 'ProductController@show',
 	'as' => 'show'
 
 ]);
@@ -40,4 +40,11 @@ Route::get('/shop', [
 	'as' => 'shop'
 
 ]);
+
+Route::get('/product-details', [
+	'uses' => 'ProductController@productDetails',
+	'as' => 'productDetails'
+
+]);
+
 

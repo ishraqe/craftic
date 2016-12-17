@@ -93,7 +93,8 @@
                                 <div class="product-f-image">
                                     <img src="{{$p->image}}" alt="">
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                    
+                                        <a href="{{route('product.addToCart',['id'=>$p->id])}}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="{{action('ProductController@show',[$p->id])}}" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>

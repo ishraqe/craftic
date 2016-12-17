@@ -46,5 +46,22 @@ Route::get('/product-details', [
 	'as' => 'productDetails'
 
 ]);
+Route::get('/add-to-cart/{id}',[
+	'uses'=>'ProductController@getAddToCArt',
+	'as' => 'product.addToCart'
+]);
+
+Route::get('/shopping-cart',[
+	'uses'=>'ProductController@getCart',
+	'as' => 'product.shoppingCart'
+]);
+Route::get('/cart',function(){
+	return view('pages.cart');
+});
+Route::get('/check',function(){
+	return view('pages.checkout');
+});
+
+
 
 

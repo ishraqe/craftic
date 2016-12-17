@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Cart;
 use App\Http\Requests;
 use App\Product;
 use DB;
+use Session;
 
 class ProductController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductController extends Controller
     public function show($id){
        
        $product=Product::findOrfail($id);
-        $allProduct=Product::all()->take(5);
+       $allProduct=Product::all()->take(5);
        $recent=Product::orderBy('created_at','desc')->take(5)->get();
        $related=Product::where('title', 'LIKE', $product->title)->get();
     
@@ -66,7 +67,11 @@ class ProductController extends Controller
     }
    
     public function shop(){
-    	return view('pages.cart');
+
+        $product=Product::paginate(12);
+    	return view('pages.shop')->with([
+            'product'=>$product
+        ]);
     }
 
     private function getProduct($id){
@@ -79,5 +84,28 @@ class ProductController extends Controller
             
 
             return $product;
+    }
+    public function getAddToCart(Request $request,$id){
+        
+        $product=Product::findOrfail($id);
+        $oldCart=Session::has('cart') ? Session::get('cart') : null;
+        $cart=new Cart($oldCart);
+        $cart->add($product,$product->id);
+
+        $request->session()->put('cart',$cart);
+        return redirect()->back();
+    }
+    public function getCart(){
+        $oldcart=[];
+        $cart=[];
+        if(!Session::has('cart')){
+            return view('pages.cart');
+        }else{
+            
+            $oldcart=Session::get('cart');
+            $cart = new Cart($oldcart);
+            
+            return view('pages.cart',['product'=>$cart->items,'totalPrice'=>$cart->totalPrice]);
+        }
     }
 }

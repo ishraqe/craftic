@@ -1,4 +1,4 @@
- <div class="related-products-wrapper">
+<div class="related-products-wrapper">
                             <h2 class="related-products-title">Related Products</h2>
                             <div class="related-products-carousel">
                             @foreach($related as $r)
@@ -19,5 +19,5 @@
                                 </div>
                             @endforeach    
                                                                    
-                            </div>
-                        </div>
+    </div>
+</div>
